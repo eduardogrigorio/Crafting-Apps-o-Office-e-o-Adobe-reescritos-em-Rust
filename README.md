@@ -1,5 +1,4 @@
-# Crafting-Apps-o-Office-e-o-Adobe-reescritos-em-Rust
-Este guia é um mapa de tradução: pra cada app da família Craft, mostramos qual programa comercial ele "imita", o que ele tem de nerd por baixo do capô e qual é o estágio real do projeto (spoiler: todo mundo está em alpha, e eles mesmos admitem isso).
+
 
 # 🧰 Crafting Apps: o Office e o Adobe, reescritos em Rust
 
