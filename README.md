@@ -1,200 +1,200 @@
+# 🧰 Crafting Apps: alternativas open source em Rust para fluxos de trabalho de escritório e criação
 
+> *"E se editores de texto, planilhas, imagens e vídeo pudessem ser compilados com `cargo build --release`?"*
+> A equipe da [ArtCraft](https://getartcraft.com/) desenvolveu uma família de aplicativos escritos em Rust, de forma independente.
 
-# 🧰 Crafting Apps: o Office e o Adobe, reescritos em Rust
+Este guia é um **mapa de referência**: para cada app da família **Craft**, indicamos **qual tipo de fluxo de trabalho ele atende**, quais são os destaques técnicos e **qual é o estágio atual do projeto** (todos estão em *alpha*, conforme os próprios READMEs).
 
-> *"E se o Word, o Photoshop e o Premiere fossem compilados com `cargo build --release`?"*
-> A galera da [ArtCraft](https://getartcraft.com/) respondeu: **reescreveu tudo do zero em Rust**, sem Electron, sem FFmpeg e sem pedir licença pra ninguém.
-
-Este guia é um **mapa de tradução**: pra cada app da família **Craft**, mostramos **qual programa comercial ele "imita"**, o que ele tem de nerd por baixo do capô e **qual é o estágio real do projeto** (spoiler: todo mundo está em *alpha*, e eles mesmos admitem isso).
+> ⚠️ **Este é um guia independente e não oficial.** Não sou afiliado à Microsoft, à Adobe nem a qualquer outra empresa citada. Veja o [Aviso legal](#️-aviso-legal) e a seção [Motivação e metodologia](#-motivação-e-metodologia).
 
 ---
 
 ## 🗺️ Resumo rápido
 
-| Repositório | Equivale a... | Categoria | Estágio (segundo o próprio README) |
+| Repositório | Alternativa para fluxos de trabalho de... | Categoria | Estágio (segundo o README do projeto) |
 |---|---|---|---|
-| [`wordcraft`](https://github.com/storytold/wordcraft) | 📝 **Microsoft Word** | Pacote Office | Alpha, ~60% pronto pra uso real |
-| [`gridcraft`](https://github.com/storytold/gridcraft) | 📊 **Microsoft Excel** | Pacote Office | Alpha, ~50% |
-| [`deckcraft`](https://github.com/storytold/deckcraft) | 📽️ **Microsoft PowerPoint** | Pacote Office | Alpha, ~55% |
-| [`photocraft`](https://github.com/storytold/photocraft) | 🖼️ **Adobe Photoshop** | Pacote Adobe | Alpha inicial |
-| [`pdfcraft`](https://github.com/storytold/pdfcraft) | 📄 **Adobe Acrobat** | Pacote Adobe | Alpha, ~55% no uso cotidiano |
-| [`effectcraft`](https://github.com/storytold/effectcraft) | ✨ **Adobe After Effects** | Pacote Adobe | Alpha, ~45% |
-| [`filmcraft`](https://github.com/storytold/filmcraft) | 🎬 **Adobe Premiere Pro** | Pacote Adobe | Alpha, ~56% |
-| [`artcraft-services`](https://github.com/storytold/artcraft-services) | ☁️ **Não é um app: é o backend do ArtCraft** | Infra / serviços | Monorepo de backend + web |
+| [`wordcraft`](https://github.com/storytold/wordcraft) | Processamento de texto (compatível com `.docx`) | Produtividade | Alpha, ~60% |
+| [`gridcraft`](https://github.com/storytold/gridcraft) | Planilhas (compatível com `.xlsx`) | Produtividade | Alpha, ~50% |
+| [`deckcraft`](https://github.com/storytold/deckcraft) | Apresentações (compatível com `.pptx`) | Produtividade | Alpha, ~55% |
+| [`photocraft`](https://github.com/storytold/photocraft) | Edição de imagens (compatível com `.psd`) | Criação | Alpha inicial |
+| [`pdfcraft`](https://github.com/storytold/pdfcraft) | Edição e organização de PDF | Criação | Alpha, ~55% |
+| [`effectcraft`](https://github.com/storytold/effectcraft) | Motion graphics e composição | Criação | Alpha, ~45% |
+| [`filmcraft`](https://github.com/storytold/filmcraft) | Edição de vídeo não-linear | Criação | Alpha, ~56% |
+| [`artcraft-services`](https://github.com/storytold/artcraft-services) | Não é um app: backend do ArtCraft | Infra / serviços | Monorepo de backend + web |
+
+*Os percentuais e estágios são os que cada projeto declara; podem estar desatualizados. Consulte sempre o repositório oficial.*
 
 ---
 
-# 🏢 Time "Office"
+# 🏢 Produtividade
 
-## 📝 WordCraft → o "Word" que não pede assinatura
+## 📝 WordCraft
 
-**Equivalente a:** Microsoft Word
+**Fluxo de trabalho atendido:** processamento de texto, com suporte ao formato `.docx`.
 
-O processador de textos que fala `.docx` fluentemente, mas é escrito em Rust puro. Tem a **ribbon** no lugar de sempre, painel de estilos com preview ao vivo, tabelas, controle de alterações, referências, mala direta... a ficha completa do Word, só que open source.
+Editor de textos escrito em Rust. Segundo o README: ribbon, painel de estilos, tabelas, controle de alterações, referências e mala direta.
 
-**Nerdices:**
-- 🦀 Roda **nativo** em Windows, macOS, Linux e BSD, e **dentro do navegador** via WebAssembly. Sem Electron, sem Tauri: GUI nativa com [egui](https://github.com/emilk/egui) na GPU.
-- 📂 Além de `.docx`, lê e salva `.odt`, `.rtf`, `.html`, `.md`, `.tex` e `.txt`, e exporta PDF com texto selecionável.
-- ⚡ Re-layout de um documento de 188 páginas em ~1,4 ms por tecla digitada.
-- 🤖 **422 comandos** acessíveis por ribbon, atalhos, CLI, canal JSON e **servidor MCP**. Ou seja: uma IA consegue editar seu documento do mesmo jeito que você.
-- 🔒 Corretor ortográfico e gramatical funcionando **offline**.
+**Destaques técnicos:**
+- 🦀 Roda nativo em Windows, macOS, Linux e BSD, e no navegador via WebAssembly, com GUI nativa em [egui](https://github.com/emilk/egui).
+- 📂 Lê e salva `.docx`, `.odt`, `.rtf`, `.html`, `.md`, `.tex` e `.txt`, e exporta PDF.
+- ⚡ Re-layout rápido de documentos longos (o projeto cita ~1,4 ms por tecla em 188 páginas).
+- 🤖 Centenas de comandos acessíveis por interface, CLI, canal JSON e servidor MCP.
+- 🔒 Corretor ortográfico e gramatical offline.
 
-**Realidade:** alpha. Falta testar com mais `.docx` do mundo real e manter gráficos/SmartArt num ida-e-volta.
-
----
-
-## 📊 GridCraft → o "Excel" sem a assinatura mensal
-
-**Equivalente a:** Microsoft Excel
-
-Planilha de alta performance, com **fórmulas, tabelas dinâmicas, gráficos, formatação condicional e sparklines**, tudo escrito em Rust. O formato nativo é **XLSX**.
-
-**Nerdices:**
-- 🧮 **500+ funções**, incluindo as hypadas: `LET`, `LAMBDA`, `MAP`, `REDUCE`, `SCAN`, `BYROW`, `BYCOL`, `MAKEARRAY`, mais arrays dinâmicos com *spilling*.
-- 🕸️ Motor de cálculo com **grafo de dependências** e recálculo incremental. Só recalcula o que mudou.
-- 📈 17 tipos de gráfico, tabelas dinâmicas (pivot), Flash Fill, validação de dados e AutoFiltro.
-- 📦 Importa `.csv`, `.tsv`, `.xls` (valores/fórmulas), `.xlsb` e `.ods` (valores).
-- ⌨️ Até as *keytips* de Alt/F10 da ribbon estão lá.
-- 🕵️ Zero telemetria, zero servidor de licença.
-
-**Realidade:** alpha, ~50% pronto. Próximos passos: fidelidade de XLSX em arquivos reais, planilhas gigantes e recálculo multithread.
+**Estágio:** alpha. Faltam mais testes com documentos reais e fidelidade em gráficos/SmartArt.
 
 ---
 
-## 📽️ DeckCraft → o "PowerPoint" feito em Rust
+## 📊 GridCraft
 
-**Equivalente a:** Microsoft PowerPoint
+**Fluxo de trabalho atendido:** planilhas, com suporte ao formato `.xlsx`.
 
-Monta apresentações com temas, layouts, formas, tabelas, gráficos, transições e animações. Abre e salva `.pptx` e apresenta em tela cheia.
+**Destaques técnicos:**
+- 🧮 500+ funções, incluindo `LET`, `LAMBDA`, `MAP`, `REDUCE` e arrays dinâmicos.
+- 🕸️ Motor de cálculo com grafo de dependências e recálculo incremental.
+- 📈 17 tipos de gráfico, tabelas dinâmicas, Flash Fill, validação de dados e AutoFiltro.
+- 📦 Importa `.csv`, `.tsv`, `.xls`, `.xlsb` e `.ods` (com as limitações descritas no projeto).
+- 🕵️ Sem telemetria.
 
-**Nerdices:**
-- 🔷 **150+ formas** prontas com *handles* de ajuste e conectores que "grudam" nas formas, além de operações de mesclar formas (união, interseção, subtração...).
-- 🎞️ Transições (até **Morph**), animações de entrada/saída/trajetória, modo apresentador, caneta e ensaio de tempos.
-- 📤 Exporta PDF, PNG/JPEG, **GIF animado** do deck inteiro e outlines.
-- 🎬 Toca áudio e vídeo (H.264, HEVC, VP9, AV1...).
+**Estágio:** alpha, ~50%. Próximos passos: fidelidade de XLSX em arquivos reais, planilhas grandes e recálculo multithread.
+
+---
+
+## 📽️ DeckCraft
+
+**Fluxo de trabalho atendido:** apresentações, com suporte ao formato `.pptx`.
+
+**Destaques técnicos:**
+- 🔷 150+ formas com handles de ajuste, conectores e operações de mesclar formas.
+- 🎞️ Transições, animações, modo apresentador, caneta e ensaio de tempos.
+- 📤 Exporta PDF, PNG/JPEG, GIF animado e outlines.
+- 🎬 Reprodução de áudio e vídeo em vários codecs.
 - 🤖 200+ comandos scriptáveis via CLI, canal JSON e MCP.
 
-**Realidade:** alpha, ~55% pronto.
+**Estágio:** alpha, ~55%.
 
 ---
 
-# 🎨 Time "Adobe"
+# 🎨 Criação
 
-## 🖼️ PhotoCraft → o "Photoshop" open source
+## 🖼️ PhotoCraft
 
-**Equivalente a:** Adobe Photoshop
+**Fluxo de trabalho atendido:** edição de imagens em camadas, com suporte a arquivos PSD/PSB.
 
-O carro-chefe da família (e de longe o mais famoso: ~69 mil estrelas no GitHub). Camadas, máscaras, camadas de ajuste, estilos de camada, texto, vetores, pincéis e, o ponto mais ambicioso, **arquivos PSD de verdade**.
-
-**Nerdices:**
-- 🗂️ Abre, edita e salva **PSD/PSB**; na bateria de testes, o re-save preserva a renderização de 307 de 309 arquivos do conjunto psd-tools.
-- 🧰 **67 ferramentas**, **16 camadas de ajuste** (Curves, Levels, Selective Color, Gradient Map...) e motor de pincel com pressão/inclinação de caneta.
-- 🎨 RGB, Grayscale, **CMYK e Lab** em 8, 16 e 32 bits, com gerenciamento de cor ICC em Rust puro.
-- ⚡ Compositor na GPU (wgpu: Metal, Vulkan, DX12, WebGPU) e um compositor na CPU como "gabarito" pra testar o da GPU.
+**Destaques técnicos:**
+- 🗂️ Abre, edita e salva PSD/PSB (o projeto reporta preservação de renderização em 307 de 309 arquivos do conjunto de testes `psd-tools`).
+- 🧰 67 ferramentas, 16 camadas de ajuste e motor de pincel com sensibilidade a caneta.
+- 🎨 RGB, Grayscale, CMYK e Lab em 8, 16 e 32 bits, com gerenciamento de cor ICC.
+- ⚡ Compositor em GPU (wgpu) e compositor em CPU usado como referência de testes.
 - 🧪 Mais de 1.700 testes.
 
-**Realidade:** *early alpha*. O próprio README diz que **ainda não substitui o Photoshop no trabalho profissional diário**. Faltam recursos de IA generativa, algumas ferramentas e compatibilidade com plug-ins.
+**Estágio:** early alpha. O próprio README afirma que ainda não substitui ferramentas profissionais no trabalho diário. Faltam recursos de IA generativa, algumas ferramentas e compatibilidade com plug-ins.
 
 ---
 
-## 📄 PdfCraft → o "Acrobat" sem dor de cabeça
+## 📄 PdfCraft
 
-**Equivalente a:** Adobe Acrobat
+**Fluxo de trabalho atendido:** leitura, organização, combinação, divisão, comentários, formulários e proteção de PDFs.
 
-A "bancada de trabalho" de PDF: ler, organizar, combinar, dividir, comentar, preencher formulários e proteger documentos.
-
-**Nerdices:**
-- 🔐 Implementa o manipulador de segurança do PDF **completo**: de RC4 40 bits até **AES-256**.
-- 💾 Cada salvamento é **incremental** (os bytes originais ficam intactos) e atômico, verificado com `qpdf` no CI.
-- 🛡️ Testado contra 983 arquivos do corpus do pdf.js: **0 crashes**.
-- 🗃️ Organiza páginas como cartas numa mesa, combina arquivos mantendo links, formulários e camadas.
-- 🌍 Renderiza scripts do mundo todo (árabe, devanágari, japonês vertical, emoji colorido).
+**Destaques técnicos:**
+- 🔐 Manipulador de segurança do PDF, de RC4 40 bits a AES-256.
+- 💾 Salvamento incremental e atômico, verificado com `qpdf` no CI.
+- 🛡️ Testado contra 983 arquivos do corpus do pdf.js, sem crashes reportados.
+- 🌍 Renderização de diversos sistemas de escrita.
 - 🕵️ Sem conta, sem nuvem, sem telemetria.
 
-**Realidade:** alpha. Ainda **não converte documentos Office para PDF**, a edição de texto existente é limitada e parte da renderização ainda usa a crate `hayro` emprestada.
+**Estágio:** alpha. Não converte documentos Office para PDF, a edição de texto existente é limitada e parte da renderização usa a crate `hayro`.
 
 ---
 
-## ✨ EffectCraft → o "After Effects" que roda no navegador
+## ✨ EffectCraft
 
-**Equivalente a:** Adobe After Effects
+**Fluxo de trabalho atendido:** motion graphics e composição.
 
-Motion graphics e composição: composições, camadas, keyframes, efeitos, expressões, câmeras 3D e fila de render. Os painéis (Project, Timeline, Effect Controls...) e até os atalhos (`P`, `S`, `R`, `T`...) seguem o After Effects.
+**Destaques técnicos:**
+- 🎛️ 306 efeitos.
+- 🧠 Expressões em JavaScript.
+- 🎥 Câmeras, luzes e sombras 3D.
+- 🧩 Import/export de Lottie e projeto em JSON legível (`.ecproj`), amigável a diffs no Git.
+- 🚫 Encoders de VP9, AV1, HEVC e Opus implementados em Rust, sem FFmpeg.
 
-**Nerdices:**
-- 🎛️ **306 efeitos** (simulação de partículas, Glow, Fractal Noise, Timewarp, Layer Styles...).
-- 🧠 **Expressões em JavaScript** com o modelo de objetos do AE (`wiggle`, `loopOut`, `thisComp.layer("…")`).
-- 🎥 Câmeras, luzes e sombras 3D com *ray tracing* suave.
-- 🧩 **Import/export de Lottie** nativo e projeto em **JSON legível** (`.ecproj`) que dá diff limpinho no Git.
-- 🚫 **Sem FFmpeg**: os encoders de VP9, AV1, HEVC e Opus são código Rust próprio.
-
-**Realidade:** alpha jovem (primeiro commit em 1º de outubro de 2026). **Não abre `.aep`** e plug-ins do After Effects não rodam. Estima-se ~45% do caminho para substituir o AE em trabalho profissional.
+**Estágio:** alpha jovem (primeiro commit em 1º de outubro de 2026). Não abre `.aep` e não executa plug-ins de terceiros. O projeto estima ~45% do caminho para uso profissional.
 
 ---
 
-## 🎬 FilmCraft → o "Premiere Pro" feito do zero
+## 🎬 FilmCraft
 
-**Equivalente a:** Adobe Premiere Pro
+**Fluxo de trabalho atendido:** edição de vídeo não-linear.
 
-Editor de vídeo não-linear profissional, com monitores Source/Program, bins, timeline multitrack, colorização, mixagem de áudio, títulos, legendas e exportação.
+**Destaques técnicos:**
+- 🧬 Codecs próprios em Rust, implementados a partir de especificações públicas: H.264, HEVC, ProRes e AAC.
+- ⏱️ Base de tempo em inteiros (254.016.000.000 ticks/s), sem deriva em frame rates comuns.
+- 🌈 Correção de cor em luz linear 32-bit float, com scopes.
+- 🔊 Loudness EBU R128 / ITU-R BS.1770.
+- 🔁 Intercâmbio via FCP7 XML, FCPXML, OpenTimelineIO, EDL CMX 3600, AAF e OMF.
+- 🤖 650+ comandos controláveis por MCP.
 
-**Nerdices:**
-- 🧬 Os **codecs são próprios**, escritos em Rust a partir das especificações: H.264, HEVC, ProRes e AAC. Nada de FFmpeg dentro (ele só serve de "oráculo" nos testes).
-- ⏱️ Tempo **exato em inteiros**: 254.016.000.000 ticks por segundo, divisível por todo frame rate comum. 23,976 e 29,97 drop-frame sem aproximação, então as edições nunca "derivam".
-- 🌈 Corretor de cor com curvas, rodas, HSL secundário e scopes (waveform e vectorscope), tudo em **luz linear 32-bit float**.
-- 🔊 Loudness EBU R128 / ITU-R BS.1770, mixer com automação estilo console.
-- 🔁 Intercâmbio com outros editores: FCP7 XML, FCPXML, OpenTimelineIO, EDL CMX 3600, AAF e OMF.
-- 🤖 650+ comandos controláveis por MCP: um agente de IA consegue cortar, colorir e exportar.
-
-**Realidade:** alpha, ~56% pronto. **Não importa `.prproj`** (use XML/AAF/OTIO), não hospeda plug-ins e a exportação H.264 é o único codec de entrega em software.
+**Estágio:** alpha, ~56%. Não importa `.prproj`, não hospeda plug-ins e a exportação H.264 é o único codec de entrega em software.
 
 ---
 
-# ☁️ O "intruso" da lista
+# ☁️ Repositório de infraestrutura
 
-## `artcraft-services` → não é um app, é a casa de máquinas
+## `artcraft-services`
 
-**Equivalente a:** *nenhum aplicativo da Adobe*, porque este repositório é **infraestrutura**.
+Não é um aplicativo de desktop: é o **backend e o front-end web do ArtCraft**, estúdio de IA para imagem e vídeo da mesma equipe (o app desktop está em [`storytold/artcraft`](https://github.com/storytold/artcraft)).
 
-Se os apps acima são os "programas de desktop", este é o **backend e o front-end web do ArtCraft**, o estúdio de IA para imagem e vídeo da mesma equipe (o app desktop vive em [`storytold/artcraft`](https://github.com/storytold/artcraft)).
+- 🦀 Backend em Rust (Actix Web + Tokio): autenticação, contas, upload de mídia, fila de gerações, créditos e cobrança via Stripe.
+- ⚛️ Frontends em React + TypeScript (Nx, Vite, Three.js).
+- 🧠 Roteador de geração que conversa com vários provedores de IA.
+- 🔑 API programática (`/v1/omni_api`) com chave de API.
+- 🗄️ MySQL, Redis, Elasticsearch e armazenamento compatível com S3/R2.
 
-**O que tem lá dentro:**
-- 🦀 **Backend em Rust** (Actix Web + Tokio): autenticação, contas, upload de mídia, fila de gerações, créditos e cobrança via Stripe.
-- ⚛️ **Frontends em React + TypeScript** (workspace Nx, Vite, Three.js) para o app web e o site do produto.
-- 🧠 Um **roteador de geração** que fala com vários provedores de IA para gerar **imagem, vídeo, áudio, malha 3D e *splats***.
-- 🔑 Uma **API programática** (`/v1/omni_api`) com chave de API para gerar mídia e consultar o status dos jobs.
-- 🗄️ Stack de apoio: MySQL, Redis, Elasticsearch e armazenamento compatível com S3/R2.
-
-> 💡 **Analogia (e só analogia):** é o tipo de "cozinha" que existe por trás de ferramentas de IA generativa na nuvem. Não há um equivalente 1:1 na lista de apps da Adobe.
+> Este repositório tem **licença própria** (`LICENSE.md`). Leia-a antes de qualquer reutilização.
 
 ---
 
-# 🎁 Bônus: os irmãos que ficaram de fora
+# 🧭 Motivação e metodologia
 
-A família **Crafting Apps** tem mais gente. Pelas descrições do próprio README, o paralelo com a Adobe seria este:
+> **Nota para quem mantém este guia:** esta seção só deve conter fatos verdadeiros e que você possa comprovar. Preencha os campos entre `[colchetes]` com a sua realidade e apague o que não se aplicar. Não afirme "clean room", "sem acesso a código proprietário" ou similares se isso não for rigorosamente verdade.
 
-| App | O que faz | Parece com |
-|---|---|---|
-| `vectorcraft` | Ilustração vetorial | Illustrator |
-| `lightcraft` | Biblioteca de fotos e revelação RAW | Lightroom |
-| `designcraft` | Diagramação e publicação | InDesign |
+## Por que estes projetos existem
 
-*(Os nomes dos programas equivalentes aqui são uma associação pelo tipo de ferramenta; confira cada repositório para detalhes.)*
+O custo de licenças de software comercial de produtividade e criação é uma barreira real para estudantes, profissionais autônomos, pequenas equipes e organizações em países com moeda desvalorizada. A motivação por trás dos projetos open source desta lista é oferecer **alternativas acessíveis, auditáveis e sem telemetria**, que permitam trabalhar com formatos de arquivo amplamente usados.
+
+[Descreva aqui, com suas palavras e em primeira pessoa, o seu contexto real: por exemplo, quem você é, qual foi o problema de custo que enfrentou e por que decidiu documentar ou desenvolver estas alternativas.]
+
+## Como o trabalho foi conduzido
+
+[Preencha apenas o que for verdadeiro. Sugestão de pontos a documentar:]
+
+- **Formatos abertos e especificações públicas.** O suporte a formatos como OOXML (ECMA-376 / ISO/IEC 29500), PDF (ISO 32000), ODF (ISO/IEC 26300) e codecs com especificação publicada foi implementado a partir da documentação pública desses padrões. `[confirme]`
+- **Sem código ou ativos de terceiros.** Não foram usados código-fonte, binários, ícones, fontes, imagens, textos de interface ou arquivos de recurso de produtos comerciais. `[confirme]`
+- **Sem engenharia reversa ou descompilação** de software comercial, e sem contornar licenças, DRM ou termos de uso. `[confirme]`
+- **Testes com arquivos próprios ou de corpus públicos** (por exemplo, os conjuntos de teste citados nos READMEs dos projetos), e não com arquivos de terceiros obtidos sem autorização. `[confirme]`
+- **Papel neste repositório.** `[Este guia apenas descreve e organiza informações dos projetos listados / eu sou autor de X / colaboro em Y.]`
+- **Fonte das informações.** Os dados vêm dos READMEs públicos dos repositórios, consultados em outubro de 2026. Estágio e números são declarados pelos próprios projetos e não foram verificados de forma independente por este guia. `[ajuste se você verificou algo]`
+
+## O que este guia não é
+
+- Não é incentivo a pirataria, a violação de licenças ou a descumprimento de termos de uso de nenhum software.
+- Não afirma que qualquer app aqui substitui produtos comerciais; todos estão em alpha e cada pessoa deve avaliar se atende às suas necessidades.
+- Não é comparação de desempenho ou qualidade com produtos de terceiros.
 
 ---
 
-# 🚀 Quer testar? (nível "nerd de terminal")
+# 🚀 Quer testar?
 
-Tudo roda com **Rust 1.95+**. Os comandos abaixo são para executar **na sua estação de trabalho**, dentro da pasta do repositório clonado, não em servidor.
+Tudo roda com **Rust 1.95+**. Execute os comandos **na sua máquina**, dentro da pasta do repositório clonado. Antes de compilar ou executar qualquer projeto de terceiros, revise o código e confirme que o repositório é o oficial.
 
 ```bash
-# Exemplo com o WordCraft (na sua estação, em qualquer terminal com Rust instalado):
+# Exemplo com o WordCraft:
 git clone https://github.com/storytold/wordcraft
 cd wordcraft
 cargo run --release -p wordcraft -- --sample
 ```
 
-| App | Comando (dentro da pasta do repo, na sua estação) |
+| App | Comando |
 |---|---|
 | WordCraft | `cargo run --release -p wordcraft -- --sample` |
 | GridCraft | `cargo run --release -p gridcraft -- --sample sales` |
@@ -204,18 +204,24 @@ cargo run --release -p wordcraft -- --sample
 | EffectCraft | `cargo run --release -p effectcraft -- --demo` |
 | FilmCraft | `cargo run --release -p filmcraft` |
 
-Prefere não compilar? Cada repositório tem **instaladores prontos** (MSI, DMG, AppImage, Flatpak, .deb, .rpm) na aba *Releases*, e também uma versão **web (WebAssembly)**.
+Os repositórios também oferecem instaladores na aba *Releases* e versão web (WebAssembly), segundo seus READMEs. Instale somente a partir dos canais oficiais.
 
 ---
 
-## ⚖️ Aviso nerd-jurídico
+## ⚖️ Aviso legal
 
-Esses são projetos **independentes e open source** (licença MIT ou Apache-2.0, à sua escolha, nos apps Craft). **Não são afiliados, patrocinados ou endossados** pela Microsoft nem pela Adobe. Os nomes Word, Excel, PowerPoint, Photoshop, Acrobat, After Effects, Premiere Pro e afins são marcas dos respectivos donos e aparecem aqui apenas para descrever os fluxos de trabalho com os quais cada app é compatível. O repositório `artcraft-services` tem licença própria (`LICENSE.md`), então confira antes de reutilizar.
+- Este é um **guia independente e informativo**, **sem vínculo, afiliação, patrocínio ou endosso** da Microsoft, da Adobe ou de qualquer outra empresa citada.
+- Microsoft, Word, Excel, PowerPoint, Office, Adobe, Photoshop, Acrobat, After Effects, Premiere Pro e outros nomes são **marcas de seus respectivos titulares**. Aparecem aqui **apenas para identificar formatos de arquivo e fluxos de trabalho com os quais os projetos declaram compatibilidade** (uso descritivo). Nenhum logotipo, ícone, captura de tela ou material de terceiros é usado.
+- Os apps Craft são distribuídos sob suas próprias licenças (segundo seus READMEs, MIT ou Apache-2.0, à escolha do usuário). O `artcraft-services` possui licença própria. **Consulte o `LICENSE` de cada repositório**; este guia não substitui esses termos.
+- As informações vêm dos READMEs públicos dos projetos (consultados em outubro de 2026) e **podem conter imprecisões ou estar desatualizadas**. Este guia é fornecido "como está", sem garantias. Verifique os dados nos repositórios oficiais antes de tomar decisões.
+- Este conteúdo é opinião e informação geral, **não constitui aconselhamento jurídico**.
 
-*Dados de estrelas e estágio de maturidade vêm dos READMEs dos repositórios, consultados em outubro de 2026, e mudam rápido (todos estão em desenvolvimento ativo).*
+## 📬 Correções e remoções
+
+Se você é titular de direitos, mantenedor de um dos projetos ou encontrou um erro, abra uma *issue* neste repositório ou escreva para `[seu e-mail de contato]`. Corrigiremos ou removeremos o conteúdo apontado de forma célere e de boa-fé.
 
 ---
 
 <p align="center">
-  Feito com ☕, <code>cargo</code> e muita curiosidade 🦀
+  Feito com ☕, <code>cargo</code> e curiosidade 🦀
 </p>
