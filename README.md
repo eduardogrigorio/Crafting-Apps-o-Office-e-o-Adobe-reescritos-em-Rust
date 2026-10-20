@@ -223,5 +223,5 @@ Se você é titular de direitos, mantenedor de um dos projetos ou encontrou um e
 ---
 
 <p align="center">
-  Feito com ☕, <code>cargo</code> e curiosidade 🦀
+ 
 </p>
